@@ -70,6 +70,7 @@ class Dog {
 	public function setBreed(string $newBreed) : void {
 		$newBreed = trim($newBreed);
 		$newBreed = filter_var($newBreed, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
 		if(empty($newBreed) === true) {
 			throw (new \InvalidArgumentException("Dog breed cannot be empty"));
 		}

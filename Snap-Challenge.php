@@ -7,8 +7,6 @@
  * @version 1.0.0
  **/
 
-$dog = {"age": 4, "breed": "Pomsky"};
-
 class Dog {
 
 	/**

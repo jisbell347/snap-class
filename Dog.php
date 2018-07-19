@@ -18,13 +18,28 @@ class Dog {
 	 * Breed of the dog
 	 */
 	private $breed;
+	/**
+	 * Name of dog
+	 */
+	private $name;
 
 	/**
 	 * Construtor method for Dog
+	 *
+	 * @param int $newAge value of age
+	 * @param string $newBreed value of breed
+	 * @param string $newName value of name
 	 */
-	public function __construct(int $newAge, string $newBreed) {
-		$this->setAge($newAge);
-		$this->setBreed($newBreed);
+	public function __construct(int $newAge, string $newBreed, string $newName) {
+		try {
+			$this->setAge($newAge);
+			$this->setBreed($newBreed);
+			$this->setName($newName);
+		}catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw new($exceptionType($exception->getMessage(), 0, $exception));
+		}
+
 	}
 
 	/**
@@ -40,12 +55,12 @@ class Dog {
 	 * Mutator method for age
 	 *
 	 * @params int $newAge new value of age
-	 * @throws \InvalidArgumentException if not a positive number
+	 * @throws \RangeException if not a positive number
 	 * @throws \TypeError if not an integer
 	 **/
 	public function setAge(int $newAge) : void {
 		if($newAge <= 0) {
-			throw (new \InvalidArgumentException("Age cannot be less than or equal to 0"));
+			throw (new \RangeException("Age cannot be less than or equal to 0"));
 		}
 		$this->age = $newAge;
 	}
@@ -78,11 +93,36 @@ class Dog {
 		$this->breed = $newBreed;
 	}
 
+	/**
+	 * Accessor method for name
+	 *
+	 * @return string value of name
+	 */
+	public function getName() : string {
+		return($this->name);
+	}
+
+	/**
+	 * Mutator method for name
+	 *
+	 * @param string $newName new value of name;
+	 * @throws \InvalidArgumentException if name is empty or insecure
+	 * @throws \TypeError if not a string
+	 */
+	public function setName(string $newName) : void {
+		$newName = trim($newName);
+		$newName = filter_var($newName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(empty($newName) === true) {
+			throw (new \InvalidArgumentException("Name cannot be empty"));
+		}
+		$this->name = $newName;
+	}
 }
 
-$dog = new Dog(4, "Beagle");
-$dog = new Dog(5, "Retriever");
-$dog = new Dog(8, "Labrador");
-$dog = new Dog(1, "Husky");
+$dog = new Dog(4, "Beagle", "Skip");
+$dog = new Dog(5, "Retriever", "Rover");
+$dog = new Dog(8, "Labrador", "Buddy");
+$dog = new Dog(1, "Husky", "Snow");
 
 

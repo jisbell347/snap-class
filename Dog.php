@@ -121,8 +121,7 @@ class Dog {
 }
 
 $dog = new Dog(4, "Beagle", "Skip");
-$dog = new Dog(5, "Retriever", "Rover");
-$dog = new Dog(8, "Labrador", "Buddy");
-$dog = new Dog(1, "Husky", "Snow");
+$dog-> setName("Shadow");
+$dog-> setAge(8);
 
-
+var_dump($dog->getName());
